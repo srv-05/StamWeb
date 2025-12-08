@@ -3,22 +3,19 @@
       {
         "name": "Rahul Sharma",
         "year": "2023",
-        "achievement": "Winner",
-        "image": "/assets/rahul.jpg"
+        "achievement": "Winner"
       },
       {
         "name": "Ananya Gupta",
         "year": "2022",
-        "achievement": "Finalist",
-        "image": "/assets/ananya.jpg"
+        "achievement": "Finalist"
       }
     ],
     "integrationBee": [
       {
         "name": "Arjun Mehta",
         "year": "2023",
-        "achievement": "Top 5",
-        "image": "/assets/arjun.jpg"
+        "achievement": "Top 5"
       }
     ]
   }
