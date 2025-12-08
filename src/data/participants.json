@@ -1,0 +1,25 @@
+{
+    "mathemania": [
+      {
+        "name": "Rahul Sharma",
+        "year": "2023",
+        "achievement": "Winner",
+        "image": "/assets/rahul.jpg"
+      },
+      {
+        "name": "Ananya Gupta",
+        "year": "2022",
+        "achievement": "Finalist",
+        "image": "/assets/ananya.jpg"
+      }
+    ],
+    "integrationBee": [
+      {
+        "name": "Arjun Mehta",
+        "year": "2023",
+        "achievement": "Top 5",
+        "image": "/assets/arjun.jpg"
+      }
+    ]
+  }
+  

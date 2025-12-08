@@ -40,10 +40,10 @@ function Navbar() {
               <NavLink to="/mathemania" className="dropdown-item">
                 Mathemania
               </NavLink>
-
-              <a href="/#participants" className="dropdown-item">
+              <NavLink to="/competitions/participants" className="dropdown-item">
                 Participants
-              </a>
+              </NavLink>
+
             </div>
           </div>
 

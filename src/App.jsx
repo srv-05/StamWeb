@@ -30,6 +30,8 @@ function App() {
 
         <Route path="/team" element={<Team />} />
 
+        <Route path="/competitions/participants" element={<Participants />} />
+
       </Routes>
     </div>
   );
