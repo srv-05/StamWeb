@@ -1,6 +1,8 @@
 // src/pages/Mathemania.jsx
 import React, { useState } from "react";
 
+import "../styles/pages/mathemania.css"; // ← ONLY ADDITION
+
 function Mathemania() {
   const [formData, setFormData] = useState({
     teamName: "",
@@ -38,13 +40,34 @@ function Mathemania() {
       return;
     }
 
+    // Enforce teammate order:
+    const hasMember2 =
+      formData.member2Name.trim() !== "" || formData.member2Email.trim() !== "";
+    const hasMember3 =
+      formData.member3Name.trim() !== "" || formData.member3Email.trim() !== "";
+    const hasMember4 =
+      formData.member4Name.trim() !== "" || formData.member4Email.trim() !== "";
+
+    if (hasMember3 && !hasMember2) {
+      alert(
+        "Please fill Team Member 2 details before adding Team Member 3."
+      );
+      return;
+    }
+
+    if (hasMember4 && !hasMember3) {
+      alert(
+        "Please fill Team Member 3 details before adding Team Member 4."
+      );
+      return;
+    }
+
     setSubmitting(true);
 
     const GOOGLE_SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbwv8yFFWikTCVSBpNaGtnYQEfCE_vmEK_J8cF1T_aF2avROc0y5Lfhak_sSKCx6FlQuzA/exec";
+      "https://script.google.com/macros/s/AKfycbypAkKF8AFwLmnvhD51elhdrWe_gubzspuuq5TnFRaeIrIqpbrdTqiDFnVfXEDLp5hL/exec";
 
     try {
-      // Send data as plain text JSON with no-cors to avoid CORS/preflight issues
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
@@ -54,7 +77,6 @@ function Mathemania() {
         body: JSON.stringify(formData)
       });
 
-      // We can't read the response in no-cors mode, so assume success if no error
       alert("Registration submitted! Your response has been recorded.");
 
       setFormData({
@@ -92,258 +114,255 @@ function Mathemania() {
           </p>
         </header>
 
-        <div className="mathemania-grid">
-          {/* LEFT PANEL */}
-          <div className="mathemania-card">
-            <h2 className="mathemania-card-title">Event Overview</h2>
-            <p className="mathemania-text">
-              Mathemania is an engaging team-based mathematics competition
-              designed to challenge participants through a curated set of eight
-              high-level problems drawn from diverse areas of mathematics. The
-              event encourages collaborative problem-solving, strategic
-              thinking, and rigorous reasoning under time constraints. Each team
-              works together to complete the full question set, applying logic,
-              geometry, algebra, number theory, and inequality techniques to
-              arrive at correct solutions.
-            </p>
+        {/* OVERVIEW – FULL WIDTH, NO BOX */}
+        <div className="mathemania-overview">
+          <h2 className="mathemania-card-title">Event Overview</h2>
+          <p className="mathemania-text">
+            Mathemania is an engaging team-based mathematics competition
+            designed to challenge participants through a curated set of eight
+            high-level problems drawn from diverse areas of mathematics. The
+            event encourages collaborative problem-solving, strategic thinking,
+            and rigorous reasoning under time constraints. Each team works
+            together to complete the full question set, applying logic,
+            geometry, algebra, number theory, and inequality techniques to
+            arrive at correct solutions.
+          </p>
 
-            <h2 className="mathemania-card-title mathemania-subheading">
-              Key Information
-            </h2>
+          <h2 className="mathemania-card-title mathemania-subheading">
+            Key Information
+          </h2>
 
-            <p className="mathemania-keyinfo">Format:</p>
-            <ul>
-              <li>The paper contains 8–10 questions, each worth 10 points.</li>
-              <li>
-                Each question is subjective and explores areas such as proofs,
-                logical reasoning, and geometry.
-              </li>
-            </ul>
+          <p className="mathemania-keyinfo">Format:</p>
+          <ul>
+            <li>The paper contains 8–10 questions, each worth 10 points.</li>
+            <li>
+              Each question is subjective and explores areas such as proofs,
+              logical reasoning, and geometry.
+            </li>
+          </ul>
 
-            {/* FIXED HERE */}
-            <p className="mathemania-keyinfo">Rules and Conduct:</p>
-            <ul>
-              <li>
-                Interaction between teams is strictly prohibited and may lead to
-                penalties or disqualification.
-              </li>
-              <li>
-                All electronic devices must be submitted to an invigilator
-                before the event begins. Any use of such devices during the
-                competition results in immediate disqualification.
-              </li>
-            </ul>
+          <p className="mathemania-keyinfo">Rules and Conduct:</p>
+          <ul>
+            <li>
+              Interaction between teams is strictly prohibited and may lead to
+              penalties or disqualification.
+            </li>
+            <li>
+              All electronic devices must be submitted to an invigilator before
+              the event begins. Any use of such devices during the competition
+              results in immediate disqualification.
+            </li>
+          </ul>
 
-            <p className="mathemania-text" style={{ marginTop: "10px" }}>
-              <a
-                href="https://drive.google.com/drive/folders/1QXsp1OCryBgIKEJScEwKYkb8kdNkmaR6?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{
-                  color: "#7b4bff",
-                  textDecoration: "underline",
-                  cursor: "pointer",
-                  fontWeight: "600"
-                }}
-              >
-                Click here for PYQs →
-              </a>
-            </p>
+          <p className="mathemania-text" style={{ marginTop: "10px" }}>
+            <a
+              href="https://drive.google.com/drive/folders/1QXsp1OCryBgIKEJScEwKYkb8kdNkmaR6?usp=sharing"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                color: "#7b4bff",
+                textDecoration: "underline",
+                cursor: "pointer",
+                fontWeight: "600"
+              }}
+            >
+              Click here for PYQs →
+            </a>
+          </p>
 
-            <p className="mathemania-text mathemania-past-line">
-              Past papers and resources will be made available on the Stamatics
-              website ahead of the contest.
-            </p>
-          </div>
+          <p className="mathemania-text mathemania-past-line">
+            Past papers and resources will be made available on the Stamatics
+            website ahead of the contest.
+          </p>
+        </div>
 
-          {/* RIGHT PANEL – FORM */}
-          <div className="mathemania-card">
-            <h2 className="mathemania-card-title">
-              Mathemania Registration Form
-            </h2>
-            <p className="mathemania-text">
-              Group size limit: up to 4 members.
-              <br />
-              <span className="mathemania-note">
-                Team name should contain only Roman characters, digits, spaces,
-                and underscores (no emojis or special symbols).
-              </span>
-            </p>
+        {/* REGISTRATION FORM – STILL IN A BOX AT THE END */}
+        <div className="mathemania-card">
+          <h2 className="mathemania-card-title">
+            Mathemania Registration Form
+          </h2>
+          <p className="mathemania-text">
+            Group size limit: up to 4 members.
+            <br />
+            <span className="mathemania-note">
+              Team name should contain only Roman characters, digits, spaces,
+              and underscores (no emojis or special symbols).
+            </span>
+          </p>
 
-            <form className="mathemania-form" onSubmit={handleSubmit}>
-              {/* TEAM NAME */}
+          <form className="mathemania-form" onSubmit={handleSubmit}>
+            {/* TEAM NAME */}
+            <div className="mathemania-field">
+              <label htmlFor="teamName">
+                Team Name<span className="required-star">*</span>
+              </label>
+              <input
+                id="teamName"
+                name="teamName"
+                type="text"
+                required
+                pattern="[A-Za-z0-9_ ]+"
+                placeholder="Enter team name"
+                value={formData.teamName}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* INSTITUTE */}
+            <div className="mathemania-field">
+              <label htmlFor="institute">
+                Institute<span className="required-star">*</span>
+              </label>
+              <input
+                id="institute"
+                name="institute"
+                type="text"
+                required
+                placeholder="Enter institute name"
+                value={formData.institute}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* TEAM LEADER */}
+            <div className="mathemania-field">
+              <label htmlFor="teamLeader">
+                Team Leader<span className="required-star">*</span>
+              </label>
+              <input
+                id="teamLeader"
+                name="teamLeader"
+                type="text"
+                required
+                placeholder="Full name of team leader"
+                value={formData.teamLeader}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* EMAIL */}
+            <div className="mathemania-field">
+              <label htmlFor="leaderEmail">
+                Email<span className="required-star">*</span>
+              </label>
+              <input
+                id="leaderEmail"
+                name="email"
+                type="email"
+                required
+                placeholder="leader@example.com"
+                value={formData.email}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* CONTACT NUMBER */}
+            <div className="mathemania-field">
+              <label htmlFor="contactNumber">
+                Contact Number<span className="required-star">*</span>
+              </label>
+              <input
+                id="contactNumber"
+                name="contactNumber"
+                type="tel"
+                required
+                placeholder="10-digit phone number"
+                value={formData.contactNumber}
+                onChange={handleChange}
+              />
+            </div>
+
+            {/* MEMBER 2 */}
+            <div className="mathemania-field-group">
               <div className="mathemania-field">
-                <label htmlFor="teamName">
-                  Team Name<span className="required-star">*</span>
-                </label>
+                <label htmlFor="member2">Team Member 2</label>
                 <input
-                  id="teamName"
-                  name="teamName"
+                  id="member2"
+                  name="member2Name"
                   type="text"
-                  required
-                  pattern="[A-Za-z0-9_ ]+"
-                  placeholder="Enter team name"
-                  value={formData.teamName}
+                  placeholder="Name (optional)"
+                  value={formData.member2Name}
                   onChange={handleChange}
                 />
               </div>
-
-              {/* INSTITUTE */}
               <div className="mathemania-field">
-                <label htmlFor="institute">
-                  Institute<span className="required-star">*</span>
-                </label>
+                <label htmlFor="member2Email">Email</label>
                 <input
-                  id="institute"
-                  name="institute"
-                  type="text"
-                  required
-                  placeholder="Enter institute name"
-                  value={formData.institute}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* TEAM LEADER */}
-              <div className="mathemania-field">
-                <label htmlFor="teamLeader">
-                  Team Leader<span className="required-star">*</span>
-                </label>
-                <input
-                  id="teamLeader"
-                  name="teamLeader"
-                  type="text"
-                  required
-                  placeholder="Full name of team leader"
-                  value={formData.teamLeader}
-                  onChange={handleChange}
-                />
-              </div>
-
-              {/* EMAIL */}
-              <div className="mathemania-field">
-                <label htmlFor="leaderEmail">
-                  Email<span className="required-star">*</span>
-                </label>
-                <input
-                  id="leaderEmail"
-                  name="email"
+                  id="member2Email"
+                  name="member2Email"
                   type="email"
-                  required
-                  placeholder="leader@example.com"
-                  value={formData.email}
+                  placeholder="member2@example.com"
+                  value={formData.member2Email}
                   onChange={handleChange}
                 />
               </div>
+            </div>
 
-              {/* CONTACT NUMBER */}
+            {/* MEMBER 3 */}
+            <div className="mathemania-field-group">
               <div className="mathemania-field">
-                <label htmlFor="contactNumber">
-                  Contact Number<span className="required-star">*</span>
-                </label>
+                <label htmlFor="member3">Team Member 3</label>
                 <input
-                  id="contactNumber"
-                  name="contactNumber"
-                  type="tel"
-                  required
-                  placeholder="10-digit phone number"
-                  value={formData.contactNumber}
+                  id="member3"
+                  name="member3Name"
+                  type="text"
+                  placeholder="Name (optional)"
+                  value={formData.member3Name}
                   onChange={handleChange}
                 />
               </div>
-
-              {/* MEMBER 2 */}
-              <div className="mathemania-field-group">
-                <div className="mathemania-field">
-                  <label htmlFor="member2">Team Member 2</label>
-                  <input
-                    id="member2"
-                    name="member2Name"
-                    type="text"
-                    placeholder="Name (optional)"
-                    value={formData.member2Name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mathemania-field">
-                  <label htmlFor="member2Email">Email</label>
-                  <input
-                    id="member2Email"
-                    name="member2Email"
-                    type="email"
-                    placeholder="member2@example.com"
-                    value={formData.member2Email}
-                    onChange={handleChange}
-                  />
-                </div>
+              <div className="mathemania-field">
+                <label htmlFor="member3Email">Email</label>
+                <input
+                  id="member3Email"
+                  name="member3Email"
+                  type="email"
+                  placeholder="member3@example.com"
+                  value={formData.member3Email}
+                  onChange={handleChange}
+                />
               </div>
+            </div>
 
-              {/* MEMBER 3 */}
-              <div className="mathemania-field-group">
-                <div className="mathemania-field">
-                  <label htmlFor="member3">Team Member 3</label>
-                  <input
-                    id="member3"
-                    name="member3Name"
-                    type="text"
-                    placeholder="Name (optional)"
-                    value={formData.member3Name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mathemania-field">
-                  <label htmlFor="member3Email">Email</label>
-                  <input
-                    id="member3Email"
-                    name="member3Email"
-                    type="email"
-                    placeholder="member3@example.com"
-                    value={formData.member3Email}
-                    onChange={handleChange}
-                  />
-                </div>
+            {/* MEMBER 4 */}
+            <div className="mathemania-field-group">
+              <div className="mathemania-field">
+                <label htmlFor="member4">Team Member 4</label>
+                <input
+                  id="member4"
+                  name="member4Name"
+                  type="text"
+                  placeholder="Name (optional)"
+                  value={formData.member4Name}
+                  onChange={handleChange}
+                />
               </div>
-
-              {/* MEMBER 4 */}
-              <div className="mathemania-field-group">
-                <div className="mathemania-field">
-                  <label htmlFor="member4">Team Member 4</label>
-                  <input
-                    id="member4"
-                    name="member4Name"
-                    type="text"
-                    placeholder="Name (optional)"
-                    value={formData.member4Name}
-                    onChange={handleChange}
-                  />
-                </div>
-                <div className="mathemania-field">
-                  <label htmlFor="member4Email">Email</label>
-                  <input
-                    id="member4Email"
-                    name="member4Email"
-                    type="email"
-                    placeholder="member4@example.com"
-                    value={formData.member4Email}
-                    onChange={handleChange}
-                  />
-                </div>
+              <div className="mathemania-field">
+                <label htmlFor="member4Email">Email</label>
+                <input
+                  id="member4Email"
+                  name="member4Email"
+                  type="email"
+                  placeholder="member4@example.com"
+                  value={formData.member4Email}
+                  onChange={handleChange}
+                />
               </div>
+            </div>
 
-              <p className="mathemania-text mathemania-footnote">
-                Fields marked with <span className="required-star">*</span> are
-                compulsory. Group size limit is up to 4 members.
-              </p>
+            <p className="mathemania-text mathemania-footnote">
+              Fields marked with <span className="required-star">*</span> are
+              compulsory. Group size limit is up to 4 members.
+            </p>
 
-              <button
-                type="submit"
-                className="mathemania-button"
-                disabled={submitting}
-              >
-                {submitting ? "Submitting..." : "Submit Registration"}
-              </button>
-            </form>
-          </div>
+            <button
+              type="submit"
+              className="mathemania-button"
+              disabled={submitting}
+            >
+              {submitting ? "Submitting..." : "Submit Registration"}
+            </button>
+          </form>
         </div>
       </div>
     </section>
