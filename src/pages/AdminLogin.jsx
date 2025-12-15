@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import bgImage from "../assets/home_background.jpg";
 
+import "../styles/pages/admin-login.css"; // ← NEW
+
 export default function AdminLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,20 +33,23 @@ export default function AdminLogin() {
   };
 
   return (
-    <div style={styles.page}>
-      <div style={styles.overlay} />
+    <div
+      className="admin-login-page"
+      style={{ backgroundImage: `url(${bgImage})` }}
+    >
+      <div className="admin-login-overlay" />
       
-      <div style={styles.card}>
-        <h1 style={styles.title}>Admin Portal</h1>
+      <div className="admin-login-card">
+        <h1 className="admin-login-title">Admin Portal</h1>
         
-        <p style={styles.subtitle}>Authorized Personnel Only</p>
+        <p className="admin-login-subtitle">Authorized Personnel Only</p>
         
-        <form onSubmit={handleLogin} style={styles.form}>
+        <form onSubmit={handleLogin} className="admin-login-form">
           
-          <div style={styles.inputGroup}>
+          <div className="admin-login-input-group">
             <input
               type="text"
-              style={styles.input}
+              className="admin-login-input"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Username"
@@ -52,11 +57,11 @@ export default function AdminLogin() {
             />
           </div>
 
-          <div style={styles.inputGroup}>
-            <div style={styles.passwordWrapper}>
+          <div className="admin-login-input-group">
+            <div className="admin-login-password-wrapper">
               <input
                 type={showPassword ? "text" : "password"}
-                style={styles.input}
+                className="admin-login-input"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Password"
@@ -65,7 +70,7 @@ export default function AdminLogin() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                style={styles.eyeButton}
+                className="admin-login-eye-button"
                 aria-label="Toggle password visibility"
               >
                 {showPassword ? (
@@ -83,9 +88,9 @@ export default function AdminLogin() {
             </div>
           </div>
           
-          {error && <p style={styles.error}>{error}</p>}
+          {error && <p className="admin-login-error">{error}</p>}
 
-          <button type="submit" style={styles.button}>
+          <button type="submit" className="admin-login-button">
             Login to Dashboard
           </button>
         </form>
@@ -93,105 +98,3 @@ export default function AdminLogin() {
     </div>
   );
 }
-
-const styles = {
-  page: {
-    minHeight: "100vh",
-    width: "100%",
-    backgroundImage: `url(${bgImage})`,
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    position: "relative",
-  },
-  overlay: {
-    position: "absolute",
-    inset: 0,
-    background: "rgba(0, 0, 0, 0.7)",
-    zIndex: 1,
-  },
-  card: {
-    position: "relative",
-    zIndex: 10,
-    width: "100%",
-    maxWidth: "400px",
-    background: "rgba(15, 23, 42, 0.6)", 
-    backdropFilter: "blur(12px)",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-    borderRadius: "16px",
-    padding: "40px",
-    textAlign: "center",
-    boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-  },
-  title: {
-    color: "#fff",
-    fontSize: "2rem",
-    fontWeight: "700",
-    marginBottom: "4px",
-  },
-  subtitle: {
-    color: "#ef4444", 
-    fontSize: "0.9rem",
-    marginBottom: "32px",
-    textTransform: "uppercase",
-    letterSpacing: "1px",
-    fontWeight: "600",
-  },
-  form: {
-    display: "flex",
-    flexDirection: "column",
-    gap: "20px",
-  },
-  inputGroup: {
-    display: "flex",
-    flexDirection: "column",
-    textAlign: "left",
-  },
-  passwordWrapper: {
-    position: "relative",
-    display: "flex",
-    alignItems: "center",
-  },
-  input: {
-    width: "100%",
-    background: "rgba(0, 0, 0, 0.3)",
-    border: "1px solid rgba(255, 255, 255, 0.1)",
-    color: "#fff",
-    padding: "14px",
-    borderRadius: "8px",
-    fontSize: "1rem",
-    outline: "none",
-    textAlign: "left",
-    transition: "border-color 0.2s",
-  },
-  eyeButton: {
-    position: "absolute",
-    right: "12px",
-    background: "transparent",
-    border: "none",
-    color: "#94a3b8",
-    cursor: "pointer",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    background: "#7b4bff",
-    color: "#fff",
-    border: "none",
-    padding: "14px",
-    borderRadius: "8px",
-    fontSize: "1rem",
-    fontWeight: "600",
-    cursor: "pointer",
-    marginTop: "10px",
-    transition: "transform 0.1s, background 0.2s",
-  },
-  error: {
-    color: "#ef4444",
-    fontSize: "0.9rem",
-    margin: "0",
-  },
-};
