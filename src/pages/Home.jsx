@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom"; // Import Link for navigation
 
+import "../styles/pages/home.css"; 
+
 import bgImage from "../assets/home_background.jpg";
 import { blogs } from "../data/blogs";   // Import your blog data
 
