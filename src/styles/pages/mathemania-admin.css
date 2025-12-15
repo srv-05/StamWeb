@@ -1,0 +1,185 @@
+/* src/styles/pages/mathemania-admin.css */
+
+.mathemania-admin-page {
+  min-height: 100vh;
+  background: #020617;
+  padding-top: 100px;
+  padding-bottom: 50px;
+  color: white;
+}
+
+.mathemania-admin-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.mathemania-admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.mathemania-admin-title {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.mathemania-admin-back-btn {
+  background: none;
+  border: 1px solid #334155;
+  color: #94a3b8;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.mathemania-admin-controls-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 30px;
+}
+
+.mathemania-admin-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.mathemania-admin-card-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.mathemania-admin-card-desc {
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-bottom: 16px;
+}
+
+.mathemania-admin-text-area {
+  width: 100%;
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  padding: 12px;
+  color: white;
+  min-height: 80px;
+  margin-bottom: 12px;
+}
+
+.mathemania-admin-file-wrapper {
+  margin-bottom: 16px;
+}
+
+.mathemania-admin-file-input {
+  color: #94a3b8;
+  font-size: 0.9rem;
+}
+
+.mathemania-admin-action-btn {
+  background: #7b4bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mathemania-admin-action-btn--uploading {
+  opacity: 0.7;
+}
+
+.mathemania-admin-table-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.mathemania-admin-table-header {
+  padding: 20px;
+  border-bottom: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+}
+
+.mathemania-admin-refresh-btn {
+  background: none;
+  color: #7b4bff;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.mathemania-admin-table-wrapper {
+  overflow-x: auto;
+}
+
+.mathemania-admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.mathemania-admin-th-row {
+  background: #0f172a;
+  text-align: left;
+}
+
+.mathemania-admin-th {
+  padding: 16px;
+  color: #94a3b8;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+}
+
+.mathemania-admin-tr-even {
+  background: rgba(30, 41, 59, 0.3);
+}
+
+.mathemania-admin-tr-odd {
+  background: transparent;
+}
+
+.mathemania-admin-td {
+  padding: 16px;
+  color: #cbd5e1;
+  border-bottom: 1px solid #1e293b;
+}
+
+.mathemania-admin-td-bold {
+  padding: 16px;
+  color: white;
+  font-weight: 600;
+  border-bottom: 1px solid #1e293b;
+}
+
+.mathemania-admin-td--empty {
+  text-align: center;
+  padding: 30px;
+}
+
+.mathemania-admin-badge-green {
+  background: rgba(34, 197, 94, 0.2);
+  color: #4ade80;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.mathemania-admin-badge-yellow {
+  background: rgba(234, 179, 8, 0.2);
+  color: #facc15;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
