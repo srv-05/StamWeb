@@ -1,0 +1,164 @@
+/* MATHEMANIA PAGE */
+
+.mathemania-page {
+  min-height: 100vh;
+  padding: 100px 32px 80px;
+  background: radial-gradient(
+      circle at 0 0,
+      rgba(123, 75, 255, 0.18),
+      transparent 55%
+    ),
+    #020617;
+  color: #fff;
+}
+
+.mathemania-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.mathemania-header {
+  max-width: 720px;
+  margin-bottom: 40px;
+}
+
+.mathemania-title {
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.mathemania-subtitle {
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--text-muted);
+}
+
+/* LAYOUT: Left content + Right form */
+
+.mathemania-grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1.3fr;
+  gap: 24px;
+  margin-bottom: 24px;
+}
+
+/* CARD BASE */
+
+.mathemania-card {
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  padding: 22px;
+  border-radius: 12px;
+}
+
+.mathemania-card-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.mathemania-text {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin-bottom: 12px;
+}
+
+.mathemania-list {
+  list-style: disc;
+  padding-left: 20px;
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-bottom: 10px;
+}
+
+.mathemania-info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.mathemania-info-label {
+  font-size: 12px;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.mathemania-info-value {
+  font-size: 14px;
+  color: #e5e7eb;
+}
+
+/* REQUIRED STAR */
+
+.required-star {
+  color: #f87171;
+  margin-left: 4px;
+}
+
+/* FORM */
+
+.mathemania-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.mathemania-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mathemania-field label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.mathemania-field input,
+.mathemania-field textarea {
+  padding: 8px 10px;
+  background: rgba(15, 23, 42, 0.96);
+  color: #e5e7eb;
+  border: 1px solid rgba(148, 163, 184, 0.6);
+  border-radius: 8px;
+}
+
+.mathemania-field input:focus,
+.mathemania-field textarea:focus {
+  border-color: var(--purple);
+}
+
+/* MEMBER ROWS */
+
+.mathemania-field-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.mathemania-footnote {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+/* BUTTON */
+
+.mathemania-button {
+  padding: 10px 22px;
+  border-radius: 999px;
+  background: var(--purple);
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.mathemania-button:hover {
+  background: #8a63ff;
+  transform: translateY(-1px);
+}
