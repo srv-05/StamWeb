@@ -1,6 +1,8 @@
 // src/pages/Contact.jsx
 import React, { useState } from "react";
 
+import "../styles/pages/contact.css"; // ← ONLY ADDITION
+
 function Contact() {
   // 1. State to hold the form data
   const [formData, setFormData] = useState({
@@ -35,10 +37,8 @@ function Contact() {
         body: JSON.stringify(formData),
       });
 
-      // Because of "no-cors", we won't get a visible JSON response.
-      // If the code reaches here, the request was sent successfully.
       setStatus("Message Sent! We will get back to you soon.");
-      setFormData({ name: "", email: "", message: "" }); // Clear the form
+      setFormData({ name: "", email: "", message: "" });
 
     } catch (error) {
       console.error("Error:", error);
@@ -53,8 +53,6 @@ function Contact() {
 
       <div style={styles.formCard}>
         <form onSubmit={handleSubmit} style={styles.form}>
-          
-          {/* Name Input */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Name</label>
             <input
@@ -68,7 +66,6 @@ function Contact() {
             />
           </div>
 
-          {/* Email Input */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Email</label>
             <input
@@ -82,7 +79,6 @@ function Contact() {
             />
           </div>
 
-          {/* Message Input */}
           <div style={styles.inputGroup}>
             <label style={styles.label}>Message</label>
             <textarea
@@ -99,7 +95,6 @@ function Contact() {
             Send Message
           </button>
 
-          {/* Status Message (Success/Error) */}
           {status && (
             <p style={status.includes("Failed") ? styles.errorMsg : styles.successMsg}>
               {status}
