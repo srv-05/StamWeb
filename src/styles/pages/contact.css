@@ -1,62 +1,124 @@
-/* CONTACT PAGE */
+/* PAGE BACKDROP */
 
 .contact-page {
   min-height: 100vh;
-  padding: 100px 32px 80px;
-  background: radial-gradient(
-      circle at 0 0,
-      rgba(123, 75, 255, 0.12),
-      transparent 55%
-    ),
-    #020617;
-  color: var(--text-main);
+  background:
+    radial-gradient(circle at top, rgba(123, 75, 255, 0.45), transparent 60%),
+    linear-gradient(180deg, #1b1038, #06020d);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
 }
 
-.contact-inner {
+/* CANVAS */
+
+.contact-canvas {
+  width: 100%;
+  max-width: 1400px;
+  display: flex;
+  justify-content: center;
+}
+
+/* MAIN BOX */
+
+.contact-box {
+  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  background: rgba(15, 23, 42, 0.9);
+  border-radius: 20px;
+  padding: 64px 72px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.6);
 }
 
-.contact-header {
-  margin-bottom: 40px;
-  max-width: 700px;
+/* LEFT */
+
+.contact-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 .contact-title {
-  font-size: 32px;
+  font-size: 52px;
   font-weight: 700;
   margin-bottom: 12px;
 }
 
-.contact-subtitle {
-  font-size: 16px;
-  color: var(--text-muted);
-  line-height: 1.7;
-}
-
-.contact-grid {
-  display: grid;
-  grid-template-columns: 1.4fr 1.2fr;
-  gap: 24px;
-}
-
-.contact-card {
-  background: rgba(15, 23, 42, 0.92);
-  border: 1px solid rgba(148, 163, 184, 0.5);
-  border-radius: 12px;
-  padding: 22px;
-}
-
-.contact-card-title {
+.contact-tagline {
   font-size: 18px;
+  color: rgba(229, 231, 235, 0.85);
+  margin-bottom: 28px;
+}
+
+.contact-text {
+  font-size: 15px;
+  color: rgba(229, 231, 235, 0.7);
+  line-height: 1.7;
+  max-width: 420px;
+}
+
+/* LEFT FOOTER */
+
+.contact-footer {
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.contact-email {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+}
+
+.contact-email svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* SOCIALS */
+
+.contact-socials {
+  display: flex;
+  gap: 14px;
+}
+
+.contact-socials a {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: rgba(123, 75, 255, 0.25);
+  color: #fff;
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 12px;
+  display: grid;
+  place-items: center;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.contact-socials a:hover {
+  background: rgba(123, 75, 255, 0.6);
+}
+
+/* RIGHT */
+
+.contact-right {
+  display: flex;
+  align-items: center;
 }
 
 .contact-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 22px;
 }
 
 .contact-field {
@@ -66,33 +128,75 @@
 }
 
 .contact-field label {
-  font-size: 13px;
-  color: var(--text-muted);
-  font-weight: 600;
+  font-size: 12px;
+  color: rgba(229, 231, 235, 0.7);
 }
 
 .contact-field input,
 .contact-field textarea {
-  padding: 8px 12px;
-  border-radius: 8px;
-  border: 1px solid rgba(148, 163, 184, 0.6);
-  background: rgba(15, 23, 42, 0.9);
-  color: #e5e7eb;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(148, 163, 184, 0.4);
+  background: rgba(2, 6, 23, 0.6);
+  color: #fff;
 }
 
-.contact-submit {
-  margin-top: 8px;
-  padding: 10px 22px;
-  border-radius: 999px;
+.contact-field textarea {
+  resize: none;
+  min-height: 200px;
+}
+
+/* ACTIONS */
+
+.contact-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.contact-actions button {
+  padding: 10px 26px;
   background: var(--purple);
   border: none;
+  border-radius: 10px;
   color: #fff;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.2s;
 }
 
-.contact-submit:hover {
+.contact-actions button:hover {
   background: #8a63ff;
-  transform: translateY(-1px);
+}
+
+/* STATUS */
+
+.contact-status {
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.contact-status.success {
+  color: #4caf50;
+}
+
+.contact-status.error {
+  color: #ff4b4b;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+  .contact-box {
+    grid-template-columns: 1fr;
+    padding: 40px 28px;
+    gap: 40px;
+  }
+
+  .contact-title {
+    font-size: 40px;
+  }
+
+  .contact-row {
+    grid-template-columns: 1fr;
+  }
 }
