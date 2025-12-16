@@ -1,7 +1,8 @@
 // src/pages/Mathemania.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { GOOGLE_SCRIPT_URL } from "../config"; // ← FIXED: Import correct URL
 
-import "../styles/pages/mathemania.css"; // ← ONLY ADDITION
+import "../styles/pages/mathemania.css";
 
 function Mathemania() {
   const [formData, setFormData] = useState({
@@ -19,6 +20,17 @@ function Mathemania() {
   });
 
   const [submitting, setSubmitting] = useState(false);
+  const [announcement, setAnnouncement] = useState(""); // ← RESTORED
+
+  // --- RESTORED ANNOUNCEMENT FETCHING ---
+  useEffect(() => {
+    fetch(`${GOOGLE_SCRIPT_URL}?action=get_announcement`)
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.text) setAnnouncement(data.text);
+      })
+      .catch((err) => console.error("Error fetching announcement:", err));
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -32,6 +44,7 @@ function Mathemania() {
     e.preventDefault();
     if (submitting) return;
 
+    // --- VALIDATION ---
     const teamNamePattern = /^[A-Za-z0-9_ ]+$/;
     if (!teamNamePattern.test(formData.teamName.trim())) {
       alert(
@@ -41,43 +54,34 @@ function Mathemania() {
     }
 
     // Enforce teammate order:
-    const hasMember2 =
-      formData.member2Name.trim() !== "" || formData.member2Email.trim() !== "";
-    const hasMember3 =
-      formData.member3Name.trim() !== "" || formData.member3Email.trim() !== "";
-    const hasMember4 =
-      formData.member4Name.trim() !== "" || formData.member4Email.trim() !== "";
+    const hasMember2 = formData.member2Name.trim() || formData.member2Email.trim();
+    const hasMember3 = formData.member3Name.trim() || formData.member3Email.trim();
+    const hasMember4 = formData.member4Name.trim() || formData.member4Email.trim();
 
     if (hasMember3 && !hasMember2) {
-      alert(
-        "Please fill Team Member 2 details before adding Team Member 3."
-      );
+      alert("Please fill Team Member 2 details before adding Team Member 3.");
       return;
     }
 
     if (hasMember4 && !hasMember3) {
-      alert(
-        "Please fill Team Member 3 details before adding Team Member 4."
-      );
+      alert("Please fill Team Member 3 details before adding Team Member 4.");
       return;
     }
 
     setSubmitting(true);
 
-    const GOOGLE_SCRIPT_URL =
-      "https://script.google.com/macros/s/AKfycbypAkKF8AFwLmnvhD51elhdrWe_gubzspuuq5TnFRaeIrIqpbrdTqiDFnVfXEDLp5hL/exec";
-
     try {
+      // FIXED: Use the global URL, not the hardcoded one
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
         headers: {
           "Content-Type": "text/plain;charset=utf-8"
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData) // Your App Script "rowMap" handles the order automatically
       });
 
-      alert("Registration submitted! Your response has been recorded.");
+      alert("🎉 Registration submitted! Your response has been recorded.");
 
       setFormData({
         teamName: "",
@@ -113,6 +117,13 @@ function Mathemania() {
             combining creativity, rigor, and problem-solving under one banner.
           </p>
         </header>
+
+        {/* RESTORED ANNOUNCEMENT BANNER */}
+        {announcement && (
+          <div style={styles.announcementBanner}>
+            <strong>📢 Update:</strong> {announcement}
+          </div>
+        )}
 
         {/* OVERVIEW – FULL WIDTH, NO BOX */}
         <div className="mathemania-overview">
@@ -176,7 +187,7 @@ function Mathemania() {
           </p>
         </div>
 
-        {/* REGISTRATION FORM – STILL IN A BOX AT THE END */}
+        {/* REGISTRATION FORM */}
         <div className="mathemania-card">
           <h2 className="mathemania-card-title">
             Mathemania Registration Form
@@ -368,5 +379,21 @@ function Mathemania() {
     </section>
   );
 }
+
+// Inline Styles for the Announcement Banner
+const styles = {
+  announcementBanner: {
+    background: "rgba(123, 75, 255, 0.15)",
+    border: "1px solid #7b4bff",
+    color: "#e0e7ff",
+    padding: "16px 20px",
+    borderRadius: "8px",
+    marginBottom: "30px",
+    fontSize: "1rem",
+    lineHeight: "1.5",
+    animation: "fadeIn 0.5s ease-in-out",
+    boxShadow: "0 4px 12px rgba(123, 75, 255, 0.1)"
+  }
+};
 
 export default Mathemania;
