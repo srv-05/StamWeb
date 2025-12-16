@@ -1,23 +1,34 @@
 [
-    {
-      "name": "Saurav Kumar",
-      "role": "President",
-      "linkedin": "https://linkedin.com/in/saurav",
-      "github": "https://github.com/saurav",
-      "bio": "Leads competitions and workshops."
-    },
-    {
-      "name": "virat ",
-      "role": "Vice President",
-      "linkedin": "https://linkedin.com/in/ananya",
-      "github": "https://github.com/ananya",
-      "bio": "Events & outreach coordinator."
-    },
-    {
-      "name": "Rohit Sharma",
-      "role": "Technical Lead",
-      "linkedin": "",
-      "github": "https://github.com/rohit",
-      "bio": "Frontend & infra."
-    }
-  ]
+  {
+    "name": "Saurav Kumar",
+    "role": "President",
+    "image": "#",
+    "bio": "Leads the club operations and strategic vision.",
+    "linkedin": "https://linkedin.com",
+    "github": "https://github.com"
+  },
+  {
+    "name": "Ananya Gupta",
+    "role": "Vice President",
+    "image": "#",
+    "bio": "Manages external relations and event coordination.",
+    "linkedin": "https://linkedin.com",
+    "github": "#"
+  },
+  {
+    "name": "Rohit Sharma",
+    "role": "Technical Lead",
+    "image": "#",
+    "bio": "Full-stack developer handling the club website and infra.",
+    "linkedin": "#",
+    "github": "https://github.com"
+  },
+  {
+    "name": "Priya Singh",
+    "role": "Creative Head",
+    "image": "#",
+    "bio": "Oversees design assets and social media branding.",
+    "linkedin": "https://linkedin.com",
+    "github": "#"
+  }
+]
