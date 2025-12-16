@@ -1,44 +1,38 @@
-// src/pages/Contact.jsx
 import React, { useState } from "react";
+import { GOOGLE_SCRIPT_URL } from "../config"; // Ensure this file exists as discussed before
 
 import "../styles/pages/contact.css"; // ← ONLY ADDITION
 
 function Contact() {
-  // 1. State to hold the form data
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     message: ""
   });
   
-  // 2. State to show "Sending..." or "Success" messages
   const [status, setStatus] = useState(""); 
 
-  // 3. Handle typing in the inputs
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  // 4. Handle the Submit button
   const handleSubmit = async (e) => {
-    e.preventDefault(); // Stop the page from reloading
+    e.preventDefault(); 
     setStatus("Sending...");
-
-    // YOUR DEPLOYED GOOGLE SCRIPT URL
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzF_wBFFV3aobvb9V2gQetQgRsc5yDlrIcrhTBrwWd84Y-q6mJxTdK9ZsUfPD9BKiiA/exec"; 
 
     try {
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
-        mode: "no-cors", // IMPORTANT: Bypasses browser CORS checks
+        mode: "no-cors", // This is important for Google Apps Script
         headers: {
-          "Content-Type": "text/plain;charset=utf-8", // IMPORTANT: Prevents preflight errors
+          "Content-Type": "text/plain;charset=utf-8",
         },
         body: JSON.stringify(formData),
       });
 
+      // Since mode is no-cors, we assume success if no network error occurred
       setStatus("Message Sent! We will get back to you soon.");
-      setFormData({ name: "", email: "", message: "" });
+      setFormData({ name: "", email: "", message: "" }); // Clear form
 
     } catch (error) {
       console.error("Error:", error);
@@ -95,6 +89,7 @@ function Contact() {
             Send Message
           </button>
 
+          {/* Status Message */}
           {status && (
             <p style={status.includes("Failed") ? styles.errorMsg : styles.successMsg}>
               {status}
@@ -106,10 +101,10 @@ function Contact() {
   );
 }
 
-// Dark Theme Styles
+// Consistent Dark Theme Styles
 const styles = {
   container: {
-    padding: "80px 20px",
+    padding: "120px 20px 80px",
     maxWidth: "600px",
     margin: "0 auto",
     color: "white",
@@ -139,7 +134,7 @@ const styles = {
   },
   button: {
     padding: "14px",
-    backgroundColor: "#4a90e2",
+    backgroundColor: "#7b4bff", // Stamatics Purple
     color: "white",
     border: "none",
     borderRadius: "8px",
