@@ -19,51 +19,7 @@ export default function AdminLogin() {
     localStorage.removeItem("admin_token");
   }, []);
 
-  const handleLogin = async (e) => {
-    e.preventDefault();
-    setError("");
 
-    // Server-Side Auth Logic
-    try {
-      // 1. Send password to Google Script
-      const response = await fetch(`${import.meta.env.VITE_GOOGLE_SCRIPT_URL || "https://script.google.com/macros/s/AKfycbyv5Pfn8jL2_0aK5t4Ue-FqfRjM4A4qR4X1-7F4h_l_j8h4f5s/exec"}`, {
-        method: "POST",
-        mode: "no-cors", // NOTE: no-cors means we CANNOT read the response token directly in browser due to CORS. 
-        // WAIT. If we use no-cors, we CANNOT get the token back. 
-        // We MUST use CORS (mode: 'cors') or JSONP.
-        // But GAS `doPost` CORS is tricky. It usually works if we follow redirects.
-        // Standard React fetch to GAS `doPost` with `redirect: follow` usually allows reading JSON *if* the script returns correct headers.
-        // BUT `no-cors` is strictly opaque.
-        // The existing code uses `no-cors` for writes (fire and forget).
-        // For LOGIN, we NEED to read the response.
-        // We must use `method: "POST"` without `mode: "no-cors"`.
-        // AND the Google Script must serve JSON with `Content-Type: application/json`.
-      });
-
-      // RE-EVALUATION: 
-      // Handling CORS with GAS is painful. 
-      // Alternative: Send a GET request for login? `action=login&password=...`
-      // GET requests allow reading JSON easily with CORS if script returns it.
-      // Passwords in URL logs are bad practice, but for GAS simplistic auth?
-      // Better: Use `POST` with `redirect: "follow"` and hope the user's GAS deployment allows it.
-      // Usually `ContentService.createTextOutput(JSON.stringify(...)).setMimeType(ContentService.MimeType.JSON)` handles CORS for GET.
-      // For POST, it involves redirects.
-
-      // LET'S TRY GET FOR LOGIN to avoid CORS blocked response issues.
-      // `?action=login&password=...`
-      // It's less secure (history logs), but robust for GAS connectivity.
-      // Given the "Admin Password" is likely shared/simple, this trade-off is often accepted in GAS projects.
-      // OR: We try standard POST. If it fails, we guide user.
-
-      // Let's use POST. If 'no-cors' prevents reading token, we are stuck.
-      // So we MUST NOT use 'no-cors'.
-
-      const scriptUrl = "https://script.google.com/macros/s/AKfycbz_1H2_... (user's url usually)";
-      // Actually we import GOOGLE_SCRIPT_URL.
-    } catch (e) { }
-
-    // ...
-  };
 
   // RETHINKING: 
   // User asked for "Server-Side Strategy".
