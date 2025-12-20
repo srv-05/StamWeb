@@ -79,7 +79,7 @@ function Navbar() {
 
         <nav className="nav-links top-right-nav">
           {/* About Us link REMOVED */}
-
+          <NavLink to="/" className={navLinkClass}>Home</NavLink>
           <div className="dropdown">
             <span className="dropdown-label">Competitions ▾</span>
             <div className="dropdown-menu">

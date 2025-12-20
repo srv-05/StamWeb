@@ -121,3 +121,186 @@
 .team-link:hover {
   color: #7b4bff;
 }
+
+/* Add this wrapper to hold fixed dimensions */
+.team-avatar-wrapper {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #7b4bff;
+}
+
+.team-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(123, 75, 255, 0.15);
+  color: #7b4bff;
+  border: 2px solid #7b4bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}/* Ensure the avatar area never collapses */
+.team-avatar-wrapper {
+  width: 140px;
+  height: 140px;
+  margin: 0 auto 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Stability for absolute children if needed */
+}
+
+.team-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #7b4bff;
+  display: block;
+}
+
+.team-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(123, 75, 255, 0.15);
+  color: #7b4bff;
+  border: 2px solid #7b4bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+/* Rest of your existing card styles... */
+.team-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s;
+}
+.team-page {
+  background: #020617;
+  min-height: 100vh;
+  padding: 120px 20px;
+  color: #fff;
+}
+
+.team-container {
+  max-width: 1300px;
+  margin: 0 auto;
+}
+
+.role-section {
+  margin-bottom: 80px;
+}
+
+.role-heading {
+  font-size: 1.8rem;
+  color: #a78bfa;
+  margin-bottom: 40px;
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  border-bottom: 1px solid rgba(167, 139, 250, 0.2);
+  display: inline-block;
+  padding-bottom: 10px;
+  width: 100%;
+}
+
+/* GRIDS */
+.team-grid {
+  display: grid;
+  gap: 30px;
+  justify-content: center;
+}
+
+/* 5 Coordinators - Centers them in a row on desktop */
+.coordinators-grid {
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* 25 Executives - Responsive fluid grid */
+.executives-grid {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+/* CARD */
+.team-card {
+  background: rgba(30, 41, 59, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+  padding: 30px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.team-card:hover {
+  transform: translateY(-8px);
+  border-color: #7b4bff;
+  box-shadow: 0 10px 30px -10px rgba(123, 75, 255, 0.3);
+}
+
+/* AVATAR STABILITY */
+.team-avatar-wrapper {
+  width: 140px;
+  height: 140px;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.team-avatar-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #7b4bff;
+}
+
+.team-avatar-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: rgba(123, 75, 255, 0.1);
+  border: 2px dashed #7b4bff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: #7b4bff;
+}
+
+.team-name { font-size: 1.2rem; margin: 0 0 5px; }
+.team-role { color: #a78bfa; font-size: 0.85rem; text-transform: uppercase; margin-bottom: 15px; }
+.team-bio { font-size: 0.9rem; color: #94a3b8; text-align: center; margin-bottom: 20px; }
+
+.team-socials { margin-top: auto; display: flex; gap: 15px; }
+.team-link { color: #64748b; transition: 0.2s; }
+.team-link:hover { color: #fff; }

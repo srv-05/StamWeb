@@ -1,7 +1,5 @@
-// src/pages/Mathemania.jsx
 import React, { useState, useEffect } from "react";
-import { GOOGLE_SCRIPT_URL } from "../config"; // ← FIXED: Import correct URL
-
+import { GOOGLE_SCRIPT_URL } from "../config";
 import "../styles/pages/mathemania.css";
 
 function Mathemania() {
@@ -10,7 +8,7 @@ function Mathemania() {
     institute: "",
     teamLeader: "",
     email: "",
-    contactNumber: "",
+    contactNumber: "", // Initialized here
     member2Name: "",
     member2Email: "",
     member3Name: "",
@@ -21,9 +19,8 @@ function Mathemania() {
 
   const [submitting, setSubmitting] = useState(false);
   const [announcement, setAnnouncement] = useState("");
-  const [contactError, setContactError] = useState(""); // New state for inline error
+  const [contactError, setContactError] = useState("");
 
-  // --- RESTORED ANNOUNCEMENT FETCHING ---
   useEffect(() => {
     fetch(`${GOOGLE_SCRIPT_URL}?action=get_announcement`)
       .then((res) => res.json())
@@ -35,395 +32,212 @@ function Mathemania() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value
-    }));
+    
+    // CHECK 1: Real-time numeric validation for contact number
+    if (name === "contactNumber") {
+      const onlyNums = value.replace(/\D/g, ""); // Remove non-digits
+      if (onlyNums.length <= 10) {
+        setFormData((prev) => ({ ...prev, [name]: onlyNums }));
+      }
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (submitting) return;
 
-    // --- VALIDATION ---
-    const teamNamePattern = /^[A-Za-z0-9_ ]+$/;
-    if (!teamNamePattern.test(formData.teamName.trim())) {
-      alert(
-        "Team name can only contain letters, numbers, spaces, and underscores. No emojis or special symbols."
-      );
+    // CHECK 2: Length validation before submission
+    if (formData.contactNumber.length !== 10) {
+      setContactError("Contact number must be exactly 10 digits.");
       return;
+    } else {
+      setContactError("");
     }
 
-    // --- CONTACT NUMBER VALIDATION ---
-    const phonePattern = /^\d{10}$/;
-    if (!phonePattern.test(formData.contactNumber.trim())) {
-      setContactError("Please enter a valid 10-digit contact number."); // Set inline error if user tries to submit invalid
-      // Scroll to error if needed, or just return. Use simple return for now.
-      return;
-    }
-
-    // Enforce teammate order:
-    const hasMember2 = formData.member2Name.trim() || formData.member2Email.trim();
-    const hasMember3 = formData.member3Name.trim() || formData.member3Email.trim();
-    const hasMember4 = formData.member4Name.trim() || formData.member4Email.trim();
-
-    if (hasMember3 && !hasMember2) {
-      alert("Please fill Team Member 2 details before adding Team Member 3.");
-      return;
-    }
-
-    if (hasMember4 && !hasMember3) {
-      alert("Please fill Team Member 3 details before adding Team Member 4.");
-      return;
+    // Final check for mandatory emails if names are present
+    for (let i = 2; i <= 4; i++) {
+      const name = formData[`member${i}Name`].trim();
+      const email = formData[`member${i}Email`].trim();
+      if (name && !email) {
+        alert(`Please provide an email for Team Member ${i}.`);
+        return;
+      }
     }
 
     setSubmitting(true);
-
     try {
-      // FIXED: Use the global URL, not the hardcoded one
       await fetch(GOOGLE_SCRIPT_URL, {
         method: "POST",
         mode: "no-cors",
-        headers: {
-          "Content-Type": "text/plain;charset=utf-8"
-        },
-        body: JSON.stringify(formData) // Your App Script "rowMap" handles the order automatically
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(formData)
       });
-
-      alert("🎉 Registration submitted! Your response has been recorded.");
-
-      setFormData({
-        teamName: "",
-        institute: "",
-        teamLeader: "",
-        email: "",
-        contactNumber: "",
-        member2Name: "",
-        member2Email: "",
-        member3Name: "",
-        member3Email: "",
-        member4Name: "",
-        member4Email: ""
-      });
+      alert("🎉 Registration successful!");
     } catch (error) {
-      console.error("Mathemania submit error:", error);
-      alert(
-        "An error occurred while submitting your registration. Please try again later."
-      );
+      alert("Error submitting registration.");
     } finally {
       setSubmitting(false);
     }
   };
 
+  // Logic to check if a member slot is "fully filled"
+  // Added contactNumber check here to unlock Member 2
+  const isFilled = (num) => {
+    if (num === 1) return (
+      formData.teamLeader.trim() !== "" && 
+      formData.email.trim() !== "" && 
+      formData.contactNumber.length === 10
+    );
+    return formData[`member${num}Name`].trim() !== "" && formData[`member${num}Email`].trim() !== "";
+  };
+
   return (
-    <section className="mathemania-page">
-      <div className="mathemania-inner">
-        {/* HEADER */}
-        <header className="mathemania-header">
-          <h1 className="mathemania-title">Mathemania</h1>
-          <p className="mathemania-subtitle">
-            The flagship mathematics contest of Stamatics, IIT Kanpur –
-            combining creativity, rigor, and problem-solving under one banner.
-          </p>
-        </header>
+    <div className="math-page-wrapper">
+      <div className="math-hero-section">
+        <h1 className="math-glitch-title">MATHEMANIA 2026</h1>
+        <div className="math-date-tag">Tentative Date: 11th Jan 2026</div>
+      </div>
 
-        {/* RESTORED ANNOUNCEMENT BANNER */}
-        {announcement && (
-          <div style={styles.announcementBanner}>
-            <strong>📢 Update:</strong> {announcement}
+      <div className="math-content-grid">
+        <div className="math-info-pane">
+          <div className="math-glass-card">
+            <h2 className="math-card-heading">Rules & Conduct</h2>
+            <div className="math-rule-box">
+              <ul>
+                <li><strong>Online Test:</strong> Strictly proctored. AI tools and external assistance are strictly prohibited.</li>
+                <li><strong>Collaboration:</strong> Allowed within your registered team only.</li>
+                <li><strong>Format:</strong> Subjective problems focused on mathematical proofs and logical reasoning.</li>
+              </ul>
+            </div>
           </div>
-        )}
-
-        {/* OVERVIEW – FULL WIDTH, NO BOX */}
-        <div className="mathemania-overview">
-          <h2 className="mathemania-card-title">Event Overview</h2>
-          <p className="mathemania-text">
-            Mathemania is an engaging team-based mathematics competition
-            designed to challenge participants through a curated set of eight
-            high-level problems drawn from diverse areas of mathematics. The
-            event encourages collaborative problem-solving, strategic thinking,
-            and rigorous reasoning under time constraints. Each team works
-            together to complete the full question set, applying logic,
-            geometry, algebra, number theory, and inequality techniques to
-            arrive at correct solutions.
-          </p>
-
-          <h2 className="mathemania-card-title mathemania-subheading">
-            Key Information
-          </h2>
-
-          <p className="mathemania-keyinfo">Format:</p>
-          <ul>
-            <li>The paper contains 8–10 questions, each worth 10 points.</li>
-            <li>
-              Each question is subjective and explores areas such as proofs,
-              logical reasoning, and geometry.
-            </li>
-          </ul>
-
-          <p className="mathemania-keyinfo">Rules and Conduct:</p>
-          <ul>
-            <li>
-              Interaction between teams is strictly prohibited and may lead to
-              penalties or disqualification.
-            </li>
-            <li>
-              All electronic devices must be submitted to an invigilator before
-              the event begins. Any use of such devices during the competition
-              results in immediate disqualification.
-            </li>
-          </ul>
-
-          <p className="mathemania-text" style={{ marginTop: "10px" }}>
-            <a
-              href="https://drive.google.com/drive/folders/1QXsp1OCryBgIKEJScEwKYkb8kdNkmaR6?usp=sharing"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                color: "#7b4bff",
-                textDecoration: "underline",
-                cursor: "pointer",
-                fontWeight: "600"
-              }}
-            >
-              Click here for PYQs →
-            </a>
-          </p>
-
-          <p className="mathemania-text mathemania-past-line">
-            Past papers and resources will be made available on the Stamatics
-            website ahead of the contest.
-          </p>
         </div>
 
-        {/* REGISTRATION FORM */}
-        <div className="mathemania-card">
-          <h2 className="mathemania-card-title">
-            Mathemania Registration Form
-          </h2>
-          <p className="mathemania-text">
-            Group size limit: up to 4 members.
-            <br />
-            <span className="mathemania-note">
-              Team name should contain only Roman characters, digits, spaces,
-              and underscores (no emojis or special symbols).
-            </span>
-          </p>
-
-          <form className="mathemania-form" onSubmit={handleSubmit}>
-            {/* TEAM NAME */}
-            <div className="mathemania-field">
-              <label htmlFor="teamName">
-                Team Name<span className="required-star">*</span>
-              </label>
-              <input
-                id="teamName"
-                name="teamName"
-                type="text"
-                required
-                pattern="[A-Za-z0-9_ ]+"
-                placeholder="Enter team name"
-                value={formData.teamName}
-                onChange={handleChange}
-              />
+        <div className="math-form-pane">
+          <form className="math-glass-card math-form" onSubmit={handleSubmit}>
+            <h2 className="math-card-heading">Team Registration</h2>
+            
+            <div className="math-row">
+              <div className="math-input-group">
+                <label>Team Name*</label>
+                <input name="teamName" required value={formData.teamName} onChange={handleChange} />
+              </div>
+              <div className="math-input-group">
+                <label>Institute*</label>
+                <input name="institute" required value={formData.institute} onChange={handleChange} />
+              </div>
             </div>
 
-            {/* INSTITUTE */}
-            <div className="mathemania-field">
-              <label htmlFor="institute">
-                Institute<span className="required-star">*</span>
-              </label>
-              <input
-                id="institute"
-                name="institute"
-                type="text"
-                required
-                placeholder="Enter institute name"
-                value={formData.institute}
-                onChange={handleChange}
-              />
+            <div className="math-row">
+              <div className="math-input-group">
+                <label>Leader Name*</label>
+                <input name="teamLeader" required value={formData.teamLeader} onChange={handleChange} />
+              </div>
+              <div className="math-input-group">
+                <label>Leader Email*</label>
+                <input name="email" type="email" required value={formData.email} onChange={handleChange} />
+              </div>
             </div>
 
-            {/* TEAM LEADER */}
-            <div className="mathemania-field">
-              <label htmlFor="teamLeader">
-                Team Leader<span className="required-star">*</span>
-              </label>
-              <input
-                id="teamLeader"
-                name="teamLeader"
-                type="text"
-                required
-                placeholder="Full name of team leader"
-                value={formData.teamLeader}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* EMAIL */}
-            <div className="mathemania-field">
-              <label htmlFor="leaderEmail">
-                Email<span className="required-star">*</span>
-              </label>
-              <input
-                id="leaderEmail"
-                name="email"
-                type="email"
-                required
-                placeholder="leader@example.com"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
-
-            {/* CONTACT NUMBER */}
-            <div className="mathemania-field">
-              <label htmlFor="contactNumber">
-                Contact Number<span className="required-star">*</span>
-              </label>
-              <input
-                id="contactNumber"
-                name="contactNumber"
+            <div className="math-input-group">
+              <label>Contact Number*</label>
+              <input 
+                name="contactNumber" 
                 type="tel"
-                required
-                maxLength="10"
-                placeholder="10-digit phone number"
-                value={formData.contactNumber}
-                onChange={(e) => {
-                  // Allow only digits
-                  const val = e.target.value.replace(/\D/g, "");
-                  setFormData((prev) => ({ ...prev, contactNumber: val }));
-                  if (contactError) setContactError(""); // Clear error on typing
-                }}
-                onBlur={() => {
-                  if (formData.contactNumber && formData.contactNumber.length !== 10) {
-                    setContactError("Contact number must be exactly 10 digits.");
-                  }
-                }}
+                placeholder="10-digit mobile number"
+                required 
+                value={formData.contactNumber} 
+                onChange={handleChange} 
               />
-              {contactError && <p className="error-message" style={{ color: "red", fontSize: "0.85rem", marginTop: "5px" }}>{contactError}</p>}
+              {contactError && <span className="math-err-txt">{contactError}</span>}
             </div>
 
-            {/* MEMBER 2 (Disabled until Team Leader details are filled) */}
-            <div className="mathemania-field-group" style={{ opacity: (formData.teamLeader && formData.email && formData.contactNumber) ? 1 : 0.6 }}>
-              <div className="mathemania-field">
-                <label htmlFor="member2">Team Member 2</label>
-                <input
-                  id="member2"
-                  name="member2Name"
-                  type="text"
-                  placeholder="Name (optional)"
-                  value={formData.member2Name}
-                  onChange={handleChange}
-                  disabled={!formData.teamLeader || !formData.email || !formData.contactNumber}
-                  title={(!formData.teamLeader || !formData.email || !formData.contactNumber) ? "Fill Team Leader details first" : ""}
+            <hr className="math-divider" />
+
+            {/* Member 2: Depends on Leader Info + Contact Number */}
+            <div className={`math-row ${!isFilled(1) ? "field-locked" : ""}`}>
+              <div className="math-input-group">
+                <label>Member 2 Name (Optional)</label>
+                <input 
+                  name="member2Name" 
+                  disabled={!isFilled(1)}
+                  value={formData.member2Name} 
+                  onChange={handleChange} 
                 />
               </div>
-              <div className="mathemania-field">
-                <label htmlFor="member2Email">Email</label>
-                <input
-                  id="member2Email"
-                  name="member2Email"
-                  type="email"
-                  placeholder="member2@example.com"
-                  value={formData.member2Email}
-                  onChange={handleChange}
-                  disabled={!formData.teamLeader || !formData.email || !formData.contactNumber}
+              <div className="math-input-group">
+                <label>Member 2 Email {formData.member2Name && <span className="req-star">*</span>}</label>
+                <input 
+                  name="member2Email" 
+                  type="email" 
+                  disabled={!isFilled(1)}
+                  required={!!formData.member2Name} 
+                  value={formData.member2Email} 
+                  onChange={handleChange} 
                 />
               </div>
             </div>
 
-            {/* MEMBER 3 (Disabled until Member 2 is filled) */}
-            <div className="mathemania-field-group" style={{ opacity: (formData.member2Name || formData.member2Email) ? 1 : 0.6 }}>
-              <div className="mathemania-field">
-                <label htmlFor="member3">Team Member 3</label>
-                <input
-                  id="member3"
-                  name="member3Name"
-                  type="text"
-                  placeholder="Name (optional)"
-                  value={formData.member3Name}
-                  onChange={handleChange}
-                  disabled={!formData.member2Name && !formData.member2Email}
-                  title={(!formData.member2Name && !formData.member2Email) ? "Fill Member 2 details first" : ""}
+            {/* Member 3: Only enabled if Member 2 is fully filled */}
+            <div className={`math-row ${!isFilled(2) ? "field-locked" : ""}`}>
+              <div className="math-input-group">
+                <label>Member 3 Name</label>
+                <input 
+                  name="member3Name" 
+                  disabled={!isFilled(2)} 
+                  value={formData.member3Name} 
+                  onChange={handleChange} 
+                  placeholder={!isFilled(2) ? "Complete Member 2" : ""}
                 />
               </div>
-              <div className="mathemania-field">
-                <label htmlFor="member3Email">Email</label>
-                <input
-                  id="member3Email"
-                  name="member3Email"
-                  type="email"
-                  placeholder="member3@example.com"
-                  value={formData.member3Email}
-                  onChange={handleChange}
-                  disabled={!formData.member2Name && !formData.member2Email}
+              <div className="math-input-group">
+                <label>Member 3 Email {formData.member3Name && <span className="req-star">*</span>}</label>
+                <input 
+                  name="member3Email" 
+                  type="email" 
+                  disabled={!isFilled(2)} 
+                  required={!!formData.member3Name} 
+                  value={formData.member3Email} 
+                  onChange={handleChange} 
                 />
               </div>
             </div>
 
-            {/* MEMBER 4 (Disabled until Member 3 is filled) */}
-            <div className="mathemania-field-group" style={{ opacity: (formData.member3Name || formData.member3Email) ? 1 : 0.6 }}>
-              <div className="mathemania-field">
-                <label htmlFor="member4">Team Member 4</label>
-                <input
-                  id="member4"
-                  name="member4Name"
-                  type="text"
-                  placeholder="Name (optional)"
-                  value={formData.member4Name}
-                  onChange={handleChange}
-                  disabled={!formData.member3Name && !formData.member3Email}
-                  title={(!formData.member3Name && !formData.member3Email) ? "Fill Member 3 details first" : ""}
+            {/* Member 4: Only enabled if Member 3 is fully filled */}
+            <div className={`math-row ${!isFilled(3) ? "field-locked" : ""}`}>
+              <div className="math-input-group">
+                <label>Member 4 Name</label>
+                <input 
+                  name="member4Name" 
+                  disabled={!isFilled(3)} 
+                  value={formData.member4Name} 
+                  onChange={handleChange} 
+                  placeholder={!isFilled(3) ? "Complete Member 3" : ""}
                 />
               </div>
-              <div className="mathemania-field">
-                <label htmlFor="member4Email">Email</label>
-                <input
-                  id="member4Email"
-                  name="member4Email"
-                  type="email"
-                  placeholder="member4@example.com"
-                  value={formData.member4Email}
-                  onChange={handleChange}
-                  disabled={!formData.member3Name && !formData.member3Email}
+              <div className="math-input-group">
+                <label>Member 4 Email {formData.member4Name && <span className="req-star">*</span>}</label>
+                <input 
+                  name="member4Email" 
+                  type="email" 
+                  disabled={!isFilled(3)} 
+                  required={!!formData.member4Name} 
+                  value={formData.member4Email} 
+                  onChange={handleChange} 
                 />
               </div>
             </div>
 
-            <p className="mathemania-text mathemania-footnote">
-              Fields marked with <span className="required-star">*</span> are
-              compulsory. Group size limit is up to 4 members.
-            </p>
-
-            <button
-              type="submit"
-              className="mathemania-button"
-              disabled={submitting}
-            >
-              {submitting ? "Submitting..." : "Submit Registration"}
+            <button type="submit" className="math-submit-btn" disabled={submitting}>
+              {submitting ? "Submitting..." : "Register Now"}
             </button>
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
-
-// Inline Styles for the Announcement Banner
-const styles = {
-  announcementBanner: {
-    background: "rgba(123, 75, 255, 0.15)",
-    border: "1px solid #7b4bff",
-    color: "#e0e7ff",
-    padding: "16px 20px",
-    borderRadius: "8px",
-    marginBottom: "30px",
-    fontSize: "1rem",
-    lineHeight: "1.5",
-    animation: "fadeIn 0.5s ease-in-out",
-    boxShadow: "0 4px 12px rgba(123, 75, 255, 0.1)"
-  }
-};
 
 export default Mathemania;
