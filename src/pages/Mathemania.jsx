@@ -76,6 +76,19 @@ function Mathemania() {
         body: JSON.stringify(formData)
       });
       alert("🎉 Registration successful!");
+      setFormData({
+        teamName: "",
+        institute: "",
+        eamLeader: "",
+        email: "",
+        contactNumber: "", // Initialized here
+        member2Name: "",
+        member2Email: "",
+        member3Name: "",
+        member3Email: "",
+        member4Name: "",
+        member4Email: ""
+      });
     } catch (error) {
       alert("Error submitting registration.");
     } finally {
