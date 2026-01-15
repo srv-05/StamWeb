@@ -105,7 +105,13 @@ function doGet(e) {
 function doPost(e) {
     // For POST, we don't have a "login" action, but we can wrap the sheet open call safely.
     try {
-        const data = JSON.parse(e.postData.contents);
+        let data = {};
+        try {
+            data = JSON.parse(e.postData.contents);
+        } catch (e) {
+            data = e.parameter || {};
+        }
+
         const action = data.action;
 
         // --- AUTHENTICATION CHECK ---
@@ -281,8 +287,14 @@ function doPost(e) {
 // HELPER COMPONENT (Unchanged)
 // =============================================================
 function jsonResponse(data) {
-    return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService
+    .createTextOutput(JSON.stringify(data))
+    .setMimeType(ContentService.MimeType.JSON)
+    .setHeader("Access-Control-Allow-Origin", "*")
+    .setHeader("Access-Control-Allow-Methods", "GET, POST")
+    .setHeader("Access-Control-Allow-Headers", "Content-Type");
 }
+
 
 function convertHtmlToMarkdown(html) {
     if (!html) return "";
