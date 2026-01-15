@@ -98,7 +98,7 @@ function Mathemania() {
     <div className="math-page-wrapper">
       <div className="math-hero-section">
         <h1 className="math-glitch-title">MATHEMANIA 2026</h1>
-        <div className="math-date-tag">Tentative Date: 25th Jan 2026</div>
+        <div className="math-date-tag">Date: 25th Jan 2026</div>
       </div>
 
       <div className="math-content-grid">
