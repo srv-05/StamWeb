@@ -13,6 +13,7 @@ import BlogReader from "./pages/BlogReader";
 import Team from "./pages/Team";
 import Contact from "./pages/Contact";
 import Mathemania from "./pages/Mathemania";
+import ViewPdf from "./pages/ViewPdf";
 
 // Admin Pages (Ensure you created these in the previous step)
 import AdminLogin from "./pages/AdminLogin";
@@ -20,6 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import MathemaniaAdmin from "./pages/MathemaniaAdmin";
 import BlogAdmin from "./pages/BlogAdmin";
 import TeamAdmin from "./pages/TeamAdmin";
+import ManUpload from "./pages/manUpload";
 
 import "./styles/globals.css";
 
@@ -44,6 +46,8 @@ function App() {
 
         <Route path="/team" element={<Team />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/view-pdf" element={<ViewPdf />} />
+        
 
         {/* ================= ADMIN ROUTES ================= */}
         <Route path="/admin" element={<AdminLogin />} />
@@ -51,6 +55,7 @@ function App() {
         <Route path="/admin/mathemania" element={<MathemaniaAdmin />} />
         <Route path="/admin/blogs" element={<BlogAdmin />} />
         <Route path="/admin/team" element={<TeamAdmin />} />
+        <Route path="/man-upload" element={<ManUpload />} />
 
         {/* Fallback for unknown routes (optional) */}
         <Route path="*" element={<div style={{ padding: 50, color: "white" }}>404 - Page Not Found</div>} />
