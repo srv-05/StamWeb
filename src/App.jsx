@@ -21,7 +21,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import MathemaniaAdmin from "./pages/MathemaniaAdmin";
 import BlogAdmin from "./pages/BlogAdmin";
 import TeamAdmin from "./pages/TeamAdmin";
-import ManUpload from "./pages/manUpload";
+// import ManUpload from "./pages/manUpload";
 
 import "./styles/globals.css";
 
