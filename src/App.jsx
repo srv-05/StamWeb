@@ -16,6 +16,7 @@ import Mathemania from "./pages/Mathemania";
 import ViewPdf from "./pages/ViewPdf";
 import MathQuiz from "./pages/MathQuiz";
 import TeamTest from "./pages/TeamTest";
+import Leaderboard from "./pages/Leaderboard";
 
 // Admin Pages (Ensure you created these in the previous step)
 import AdminLogin from "./pages/AdminLogin";
@@ -42,6 +43,7 @@ function App() {
             [cite_start]The Navbar links directly to /mathemania anyway. [cite: 22] */}
 
         <Route path="/mathemania" element={<Mathemania />} />
+        <Route path="/leaderboard" element={<Leaderboard />} />
 
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogReader />} />
@@ -51,7 +53,7 @@ function App() {
         <Route path="/view-pdf" element={<ViewPdf />} />
         <Route path="/submit-answers" element={<MathQuiz />} />
         <Route path="/team-test" element={<TeamTest />} />
-        
+
 
         {/* ================= ADMIN ROUTES ================= */}
         <Route path="/admin" element={<AdminLogin />} />

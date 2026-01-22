@@ -1,0 +1,53 @@
+/* src/styles/pages/leaderboard.css */
+.leaderboard-table-wrapper {
+    overflow-x: auto;
+    width: 100%;
+}
+
+.leaderboard-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1rem;
+}
+
+.leaderboard-table thead tr {
+    background: rgba(123, 75, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.leaderboard-table th {
+    padding: 16px;
+    color: #cbd5e1;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-size: 0.85rem;
+    text-align: left;
+}
+
+.leaderboard-table tbody tr {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: background 0.2s ease;
+}
+
+.leaderboard-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.leaderboard-table tbody tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.leaderboard-table td {
+    padding: 16px;
+    color: #94a3b8;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 600px) {
+    .leaderboard-table th, 
+    .leaderboard-table td {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}

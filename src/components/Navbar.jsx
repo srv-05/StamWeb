@@ -85,6 +85,7 @@ function Navbar() {
             <div className="dropdown-menu">
               <a href="/#integration" className="dropdown-item">Integration Bee</a>
               <NavLink to="/mathemania" className="dropdown-item">Mathemania</NavLink>
+              <NavLink to="/leaderboard" className="dropdown-item">Leaderboard</NavLink>
               {/* Participants link removed */}
             </div>
           </div>
