@@ -44,7 +44,7 @@ function Mathemania() {
               
               <div className="math-status-body">
                 <p>
-                  Registrations for Mathemania 2026 are now officially closed. 
+                  Registrations for Mathemania 2025 are now officially closed. 
                   Thank you for the overwhelming response!
                 </p>
 

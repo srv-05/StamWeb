@@ -1,91 +1,103 @@
-import React, { useState, useEffect } from "react";
-import { createClient } from "@supabase/supabase-js";
-import "../styles/pages/mathemania.css";
-import "../styles/pages/leaderboard.css";
+import React, { useEffect, useState } from 'react';
+import { quizService } from '../services/quizService';
+import '../styles/pages/leaderboard.css';
 
-// Initialize Supabase Client
-const supabaseUrl = "https://xtcxaivsebyyswqognuf.supabase.co";
-const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
-const supabase = createClient(supabaseUrl, supabaseKey);
+const ANSWER_KEY = {
+  1: ["A", "B"], 2: ["C"], 3: ["A", "D"], 4: ["B", "C", "D"], 5: ["A"],
+  // Add remaining up to 25 based on examination details
+};
 
-export default function Leaderboard() {
-    const [data, setData] = useState([]);
-    const [loading, setLoading] = useState(true);
+const Leaderboard = () => {
+  const [rankedTeams, setRankedTeams] = useState([]);
+  const [isProcessing, setIsProcessing] = useState(true);
 
-    useEffect(() => {
-        fetchLeaderboard();
-    }, []);
+  const calculateScore = (userAnswers) => {
+    let totalScore = 0;
+    Object.keys(ANSWER_KEY).forEach((qId) => {
+      const correct = ANSWER_KEY[qId];
+      const user = userAnswers[qId] || [];
+      if (user.length === 0) return;
 
-    const fetchLeaderboard = async () => {
-        try {
-            // Fetch teams sorted by Score (High to Low)
-            const { data: records, error } = await supabase
-                .from("quiz_responses")
-                .select("team_name, score, created_at")
-                .order("score", { ascending: false });
+      const hasIncorrect = user.some(opt => !correct.includes(opt));
+      const isPerfect = correct.length === user.length && user.every(opt => correct.includes(opt));
 
-            if (error) throw error;
+      if (hasIncorrect) totalScore -= 1; // Any incorrect: -1
+      else if (isPerfect) totalScore += 3; // All correct: +3
+      else totalScore += 1; // Partial correct: +1
+    });
+    return totalScore;
+  };
 
-            setData(records);
-        } catch (err) {
-            console.error("Error fetching leaderboard:", err);
-        } finally {
-            setLoading(false);
-        }
-    };
+  // Leaderboard.jsx (Partial Update)
 
-    return (
-        <div className="math-page-wrapper">
-            <div className="math-hero-section">
-                <h1 className="math-glitch-title">LEADERBOARD</h1>
-                <div className="math-date-tag">Live Rankings</div>
-            </div>
+useEffect(() => {
+  const runFullSync = async () => {
+    try {
+      setIsProcessing(true);
+      const rawData = await quizService.getRawResponses();
+      
+      // Ensure we only process the first submission from each team if duplicates exist
+      const uniqueTeams = Array.from(new Map(rawData.map(r => [r.team_name, r])).values());
+      
+      await Promise.all(uniqueTeams.map(async (team) => {
+        const score = calculateScore(team.answers);
+        // Pass submitted_at to use as the ranking tie-breaker
+        await quizService.saveToLeaderboard(
+          team.team_name, 
+          score, 
+          team.institute || "IIT Kanpur", 
+          team.submitted_at 
+        );
+      }));
 
-            <div className="math-content-grid" style={{ display: 'block', maxWidth: '900px', margin: '0 auto' }}>
-                <div className="math-glass-card" style={{ padding: '0', overflow: 'hidden' }}>
+      const finalLeaderboard = await quizService.fetchLeaderboard();
+      setRankedTeams(finalLeaderboard);
+    } catch (err) {
+      console.error("Sync Error:", err.message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  runFullSync();
+}, []);
 
-                    {loading ? (
-                        <div style={{ padding: '40px', textAlign: 'center', color: '#94a3b8' }}>
-                            Loading Rankings...
-                        </div>
-                    ) : (
-                        <div className="leaderboard-table-wrapper">
-                            <table className="leaderboard-table">
-                                <thead>
-                                    <tr>
-                                        <th style={{ width: '80px', textAlign: 'center' }}>Rank</th>
-                                        <th>Team Name</th>
-                                        <th style={{ textAlign: 'right' }}>Score</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {data.length === 0 ? (
-                                        <tr>
-                                            <td colSpan="3" style={{ textAlign: 'center', padding: '30px', color: '#64748b' }}>
-                                                No submissions yet. Be the first!
-                                            </td>
-                                        </tr>
-                                    ) : (
-                                        data.map((row, index) => (
-                                            <tr key={index}>
-                                                <td style={{ textAlign: 'center', fontWeight: 'bold', color: index < 3 ? '#fbbf24' : '#94a3b8' }}>
-                                                    #{index + 1}
-                                                </td>
-                                                <td style={{ fontWeight: '500', color: 'white' }}>
-                                                    {row.team_name}
-                                                </td>
-                                                <td style={{ textAlign: 'right', fontWeight: 'bold', color: '#4ade80' }}>
-                                                    {row.score !== null ? row.score : "N/A"}
-                                                </td>
-                                            </tr>
-                                        ))
-                                    )}
-                                </tbody>
-                            </table>
-                        </div>
-                    )}
-                </div>
-            </div>
+  return (
+    <div className="leaderboard-container">
+      <h1 className="glitch-title">LEADERBOARD: Round 1</h1>
+      
+      {isProcessing ? (
+        <div className="loading-wrapper">
+          <div className="spinner"></div>
+          <p>Syncing Mathematical Excellence...</p>
         </div>
-    );
-}
+      ) : (
+        <div className="table-wrapper">
+          <table className="leaderboard-table">
+            <thead>
+              <tr>
+                <th>RANK</th>
+                <th>TEAM</th>
+                <th>COLLEGE</th>
+                <th>SCORE</th>
+              </tr>
+            </thead>
+            <tbody>
+              {rankedTeams.map((team, idx) => (
+                <tr key={team.team_name} className={`rank-row rank-${idx + 1}`}>
+                  <td className="rank-cell">
+                    {idx < 3 ? <span className="medal">{['🥇', '🥈', '🥉'][idx]}</span> : idx + 1}
+                  </td>
+                  <td className="team-name">{team.team_name}</td>
+                  <td className="college-name">{team.college}</td>
+                  <td className="score-cell">{team.score}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default Leaderboard;
