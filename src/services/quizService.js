@@ -73,8 +73,18 @@ export const quizService = {
     const { data, error } = await supabase
       .from('leaderboard')
       .select('*')
-      .order('score', { ascending: false });
+      .order('score', { ascending: false })
+      .order('updated_at', { ascending: true });
     if (error) throw error;
     return data;
+  },
+
+  syncLeaderboard: async () => {
+    // Calls the PostgreSQL function we just created
+    const { error } = await supabase.rpc('calculate_team_scores');
+    if (error) throw error;
+    
+    // Then fetch the sorted results
+    return await quizService.fetchLeaderboard();
   }
 };

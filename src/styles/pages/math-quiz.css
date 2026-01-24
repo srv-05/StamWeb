@@ -324,3 +324,70 @@
   font-weight: bold;
   font-size: 1.1rem;
 }
+
+/* Container for the integer input */
+.integer-input-wrapper {
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+/* The Input Field itself */
+.math-integer-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  padding: 12px 16px;
+  color: #fff;
+  font-family: 'Inter', sans-serif;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* Hover Effect */
+.math-integer-input:hover {
+  border-color: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+/* Focus State - Neon Blue/Pink Glow to match Mathemania */
+.math-integer-input:focus {
+  border-color: #00d2ff;
+  background: rgba(0, 210, 255, 0.05);
+  box-shadow: 0 0 15px rgba(0, 210, 255, 0.3),
+              inset 0 0 5px rgba(0, 210, 255, 0.1);
+  transform: translateY(-2px);
+}
+
+/* Remove default arrows (spinners) for a cleaner look */
+.math-integer-input::-webkit-outer-spin-button,
+.math-integer-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.math-integer-input[type=number] {
+  -moz-appearance: textfield;
+}
+
+/* Badge styling for the "Integer Answer" text */
+.int-badge {
+  background: linear-gradient(90deg, #ff00cc, #3333ff);
+  color: white;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px rgba(255, 0, 204, 0.4);
+}
+
+/* Placeholder color */
+.math-integer-input::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 0.9rem;
+}
+

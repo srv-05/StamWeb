@@ -2,64 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { quizService } from '../services/quizService';
 import '../styles/pages/leaderboard.css';
 
-const ANSWER_KEY = {
-  1: ["A", "B"], 2: ["C"], 3: ["A", "D"], 4: ["B", "C", "D"], 5: ["A"],
-  // Add remaining up to 25 based on examination details
-};
-
 const Leaderboard = () => {
   const [rankedTeams, setRankedTeams] = useState([]);
   const [isProcessing, setIsProcessing] = useState(true);
 
-  const calculateScore = (userAnswers) => {
-    let totalScore = 0;
-    Object.keys(ANSWER_KEY).forEach((qId) => {
-      const correct = ANSWER_KEY[qId];
-      const user = userAnswers[qId] || [];
-      if (user.length === 0) return;
-
-      const hasIncorrect = user.some(opt => !correct.includes(opt));
-      const isPerfect = correct.length === user.length && user.every(opt => correct.includes(opt));
-
-      if (hasIncorrect) totalScore -= 1; // Any incorrect: -1
-      else if (isPerfect) totalScore += 3; // All correct: +3
-      else totalScore += 1; // Partial correct: +1
-    });
-    return totalScore;
-  };
-
-  // Leaderboard.jsx (Partial Update)
-
-useEffect(() => {
-  const runFullSync = async () => {
-    try {
-      setIsProcessing(true);
-      const rawData = await quizService.getRawResponses();
-      
-      // Ensure we only process the first submission from each team if duplicates exist
-      const uniqueTeams = Array.from(new Map(rawData.map(r => [r.team_name, r])).values());
-      
-      await Promise.all(uniqueTeams.map(async (team) => {
-        const score = calculateScore(team.answers);
-        // Pass submitted_at to use as the ranking tie-breaker
-        await quizService.saveToLeaderboard(
-          team.team_name, 
-          score, 
-          team.institute || "IIT Kanpur", 
-          team.submitted_at 
-        );
-      }));
-
-      const finalLeaderboard = await quizService.fetchLeaderboard();
-      setRankedTeams(finalLeaderboard);
-    } catch (err) {
-      console.error("Sync Error:", err.message);
+  useEffect(() => {
+    // Example modification for Leaderboard.jsx
+    const fetchAndSync = async () => {
+        try {
+          setIsProcessing(true);
+    // Add a retry or longer timeout logic if needed for Render's cold start
+          const data = await quizService.syncLeaderboard();
+          setRankedTeams(data);
+        } catch (err) {
+        console.error("Sync Error:", err.message);
+    // Tip: If it fails, wait 5 seconds and try once more automatically
     } finally {
-      setIsProcessing(false);
-    }
-  };
-  runFullSync();
-}, []);
+    setIsProcessing(false);
+  }
+};
+    fetchAndSync();
+  }, []);
 
   return (
     <div className="leaderboard-container">
@@ -68,7 +31,7 @@ useEffect(() => {
       {isProcessing ? (
         <div className="loading-wrapper">
           <div className="spinner"></div>
-          <p>Syncing Mathematical Excellence...</p>
+          <p>Calculating scores securely...</p>
         </div>
       ) : (
         <div className="table-wrapper">
