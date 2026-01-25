@@ -45,7 +45,7 @@ function App() {
             [cite_start]The Navbar links directly to /mathemania anyway. [cite: 22] */}
 
         <Route path="/mathemania" element={<Mathemania />} />
-        <Route path="/leaderboard" element={<Leaderboard />} />
+        <Route path="/cactus" element={<Leaderboard />} />
 
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<BlogReader />} />
