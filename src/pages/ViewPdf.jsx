@@ -12,7 +12,7 @@ export default function ViewPdf() {
   // const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769277233/_-3_xvy8m8.pdf";
 
    // Objective Paper
-  const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769317327/Stamatics__Mathemania_2025_Objective_Round_sdhbkf.pdf";
+   const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769321464/objective_1_cihxzm.pdf";
 
   return (
     <div className="pdf-view-container">
