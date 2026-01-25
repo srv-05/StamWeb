@@ -9,10 +9,14 @@ export default function ViewPdf() {
   // const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769277232/_-2_s1ntmf.pdf";
 
   // Round 2
-  const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769277233/_-3_xvy8m8.pdf";
+  // const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769277233/_-3_xvy8m8.pdf";
 
    // Objective Paper
   //  const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769324100/Mathemania_Obj_Full_fo463e.pdf";
+
+  // Subjective Paper
+   const pdfUrl = "https://res.cloudinary.com/dxyopyus4/image/upload/v1769277071/subjective_lq9htp.pdf";
+
 
   return (
     <div className="pdf-view-container">
