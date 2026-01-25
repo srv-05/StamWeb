@@ -83,8 +83,10 @@ function Navbar() {
           <div className="dropdown">
             <span className="dropdown-label">Competitions ▾</span>
             <div className="dropdown-menu">
-              <a href="/#integration" className="dropdown-item">Integration Bee</a>
               <NavLink to="/mathemania" className="dropdown-item">Mathemania</NavLink>
+              <NavLink to="/leaderboard" className="dropdown-item">Leaderboard</NavLink>
+              <NavLink to="/view-pdf" className="dropdown-item">Round 2: Questions</NavLink>
+              <NavLink to="/second-round" className="dropdown-item">Submit Answers</NavLink>
               {/* Participants link removed */}
             </div>
           </div>

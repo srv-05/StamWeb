@@ -1,0 +1,190 @@
+/* Container Background with a subtle radial gradient */
+.leaderboard-container {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top right, #1e1b4b, #0f172a 50%);
+  color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Glitch Title Effect */
+.glitch-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-align: center;
+  letter-spacing: 4px;
+  color: #7b4bff;
+  text-shadow: 0 0 20px rgba(123, 75, 255, 0.4);
+  margin-bottom: 40px;
+  text-transform: uppercase;
+}
+
+/* Table Wrapper for Glassmorphism */
+.table-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(30, 41, 59, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow-x: auto; /* Ensures table scrolls on small screens */
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.custom-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  min-width: 650px; /* Prevents columns from overlapping on mobile */
+}
+
+/* Header Styling */
+.custom-table thead th {
+  padding: 20px;
+  background: rgba(123, 75, 255, 0.15);
+  color: #cbd5e1;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  border-bottom: 2px solid #7b4bff;
+}
+
+/* Row Styling */
+.custom-table tbody tr {
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.custom-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.03);
+  transform: scale(1.002);
+}
+
+.custom-table td {
+  padding: 20px;
+  font-size: 1rem;
+  color: #94a3b8;
+}
+
+/* Cell Specific Styles */
+.rank-cell { font-weight: 800; color: #7b4bff; width: 80px; text-align: center; }
+.team-name { font-weight: 600; color: #fff; }
+.college-name { font-size: 0.9rem; color: #94a3b8; font-style: italic; opacity: 0.8; }
+.score-cell { 
+  font-family: 'Mono', monospace; 
+  font-weight: 700; 
+  color: #22c55e; 
+  font-size: 1.25rem;
+  text-align: right;
+}
+
+/* Medal & Glow Effect for Winners */
+.medal { font-size: 1.4rem; }
+.rank-1 { background: linear-gradient(90deg, rgba(255, 215, 0, 0.05) 0%, transparent 100%); }
+.rank-1 .rank-cell { color: #ffd700; text-shadow: 0 0 10px #ffd700; }
+
+/* Loading State Styling */
+.loading-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 100px;
+  color: #7b4bff;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(123, 75, 255, 0.2);
+  border-top-color: #7b4bff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 20px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+/* Specific Column Widths */
+.custom-table th:nth-child(1), .custom-table td:nth-child(1) { width: 10%; }
+.custom-table th:nth-child(2), .custom-table td:nth-child(2) { width: 35%; }
+.custom-table th:nth-child(3), .custom-table td:nth-child(3) { width: 35%; }
+.custom-table th:nth-child(4), .custom-table td:nth-child(4) { width: 20%; }
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .glitch-title { font-size: 2.2rem; }
+  .custom-table td, .custom-table th { padding: 12px; font-size: 0.9rem; }
+  .leaderboard-container { padding: 40px 10px; }
+}
+
+.leaderboard-container {
+  min-height: 100vh;
+  padding: 60px 20px;
+  background: radial-gradient(circle at top right, #1e1b4b, #0f172a 50%);
+  color: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.glitch-title {
+  font-size: 3.5rem;
+  font-weight: 900;
+  text-align: center;
+  color: #7b4bff;
+  text-shadow: 0 0 20px rgba(123, 75, 255, 0.4);
+  margin-bottom: 40px;
+}
+
+.table-wrapper {
+  width: 100%;
+  max-width: 1000px;
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.leaderboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.leaderboard-table th {
+  padding: 24px 20px;
+  background: rgba(123, 75, 255, 0.2);
+  color: #cbd5e1;
+  font-size: 0.9rem;
+  text-align: left;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #7b4bff;
+}
+
+.leaderboard-table td {
+  padding: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: 1.1rem;
+}
+
+.rank-cell { width: 15%; text-align: center; font-weight: bold; color: #7b4bff; }
+.team-name { width: 35%; color: #fff; font-weight: 600; }
+.college-name { width: 35%; color: #94a3b8; font-style: italic; font-size: 0.95rem; }
+.score-cell { width: 15%; text-align: right; color: #22c55e; font-weight: 900; padding-right: 40px !important; }
+
+/* Medal Glow */
+.medal { font-size: 1.5rem; text-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
+
+/* Animation */
+.spinner {
+  width: 50px; height: 50px; border: 5px solid rgba(123, 75, 255, 0.2);
+  border-top-color: #7b4bff; border-radius: 50%;
+  animation: spin 1s linear infinite; margin: 0 auto 20px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
